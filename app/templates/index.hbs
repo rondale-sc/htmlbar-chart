@@ -6,6 +6,7 @@
   <p>Context</p>
   {{textarea value=daContext classNameBindings='jsonParseError' }}
 </div>
+{{input value=jsonContext.name}}
 <hr/>
 <div class="inline">
   <h2>Handlebars</h2>
@@ -15,7 +16,8 @@
       {{compiledHandlebars}}
     </pre>
   </div>
-  {{ view "rendered" 
+  {{ view 
+    class="output"
     instrumentName="render-time.handlebars"
     template=compiledHandlebars
     context=jsonContext }}
@@ -28,7 +30,8 @@
       {{compiledHTMLBars}}
     </pre>
   </div>
-  {{ view "rendered" 
+  {{ view 
+    class="output"
     instrumentName="render-time.htmlbars"
     template=compiledHTMLBars
     context=jsonContext }}

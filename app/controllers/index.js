@@ -4,7 +4,11 @@ import { compileSpec } from 'htmlbars-compiler/compiler';
 export default Ember.Controller.extend({
   daTemplate: null,
   daContext: null,
+  handlebarsJsonContext: null,
+  htmlbarsJsonContext: null,
+
   jsonParseError: true,
+
   time: {
     render: {
       handlebars: {
@@ -17,7 +21,7 @@ export default Ember.Controller.extend({
       }
     }
   },
-  init: function(){
+  init: function() {
     this._super();
     this.setProperties({
       daTemplate: '<div>Name: {{name}}</div>',
@@ -42,6 +46,7 @@ export default Ember.Controller.extend({
       }
     });
   },
+
   handlebarsRenderTime: Ember.computed('time.render.handlebars.start', 'time.render.handlebars.stop', function(){
     var start = this.get('time.render.handlebars.start');
     var stop = this.get('time.render.handlebars.stop');
@@ -52,18 +57,14 @@ export default Ember.Controller.extend({
     var stop = this.get('time.render.htmlbars.stop');
     return stop - start;
   }),
+
   compiledHandlebars: Ember.computed('daTemplate', function(){
     return Handlebars.compile(this.get('daTemplate'));
   }),
   compiledHTMLBars: Ember.computed('daTemplate', function(){
     return new Function('return ' + compileSpec(this.get('daTemplate')))();
   }),
-  renderedHandlebars: Ember.computed('jsonContext', 'compiledHandlebars', function(){
-    return this.get('compiledHandlebars')(this.get('jsonContext'));
-  }),
-  renderedHTMLBars: Ember.computed('jsonContext', 'compiledHTMLBars', function(){
-    return this.get('compiledHTMLBars')(this.get('jsonContext'));
-  }),
+
   parseJson: Ember.observer('daContext', function(){
     try {
       this.set('jsonParseError', false);

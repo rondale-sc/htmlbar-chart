@@ -4,6 +4,7 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
   vendorFiles: {
+    'handlebars': 'bower_components/handlebars/handlebars.js',
     'ember.js': 'vendor/ember/ember.js'
   }
 });

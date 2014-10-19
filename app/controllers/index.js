@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { compileSpec } from 'htmlbars-compiler/compiler';
+import { compile as htmlbarsCompile } from 'htmlbars-compiler/compiler';
 
 export default Ember.Controller.extend({
   daTemplate: null,
@@ -31,14 +31,14 @@ export default Ember.Controller.extend({
     var self = this;
 
     Ember.subscribe("render", {
-      before: function(name, timestamp, payload) {
+      before: function(name, timestamp) {
         if (name.indexOf('render-time') !== -1) {
           var parts = name.split('.');
           self.set('time.render.'+parts[2]+'.start', timestamp);
         }
       },
 
-      after: function(name, timestamp, payload) {
+      after: function(name, timestamp) {
         if (name.indexOf('render-time') !== -1) {
           var parts = name.split('.');
           self.set('time.render.'+parts[2]+'.stop', timestamp);
@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
     return Handlebars.compile(this.get('daTemplate'));
   }),
   compiledHTMLBars: Ember.computed('daTemplate', function(){
-    return new Function('return ' + compileSpec(this.get('daTemplate')))();
+    return htmlbarsCompile(this.get('daTemplate'));
   }),
 
   parseJson: Ember.observer('daContext', function(){

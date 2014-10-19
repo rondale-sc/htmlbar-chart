@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'htmlbar-chart',
     environment: environment,
-    baseURL: '/',
+    baseURL: '/htmlbar-chart/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { compile as htmlbarsCompile } from 'htmlbars-compiler/compiler';
+import { compileSpec as htmlbarsCompileSpec } from 'htmlbars-compiler/compiler';
 
 export default Ember.Controller.extend({
   daTemplate: null,
@@ -58,11 +59,19 @@ export default Ember.Controller.extend({
     return stop - start;
   }),
 
-  compiledHandlebars: Ember.computed('daTemplate', function(){
-    return Handlebars.compile(this.get('daTemplate'));
+  precompiledHandlebars: Ember.computed('daTemplate', function(){
+    return Ember.Handlebars.precompile(this.get('daTemplate'));
   }),
-  compiledHTMLBars: Ember.computed('daTemplate', function(){
-    return htmlbarsCompile(this.get('daTemplate'));
+
+  preCompiledHTMLBars: Ember.computed('daTemplate', function(){
+    return htmlbarsCompileSpec(this.get('daTemplate'));
+  }),
+
+  compiledHandlebars: Ember.computed('precompiledHandlebars', function(){
+    return Ember.Handlebars.template(eval(this.get('precompiledHandlebars')));
+  }),
+  compiledHTMLBars: Ember.computed('preCompiledHTMLBars', function(){
+    return new Function('return ' + this.get('preCompiledHTMLBars'))();
   }),
 
   parseJson: Ember.observer('daContext', function(){

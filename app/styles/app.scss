@@ -1,0 +1,25 @@
+$red: #cf4032;
+
+html, body {
+  margin: 20px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.json-parse-error {
+  border: 1px solid $red;
+  background: lighten($red, 45%);
+  outline: none;
+}
+
+.output {
+  max-height: 100px;
+  min-height: 50px;
+  margin-top: 5px;
+  overflow: scroll;
+  border: 1px solid black;
+  padding: 5px;
+  width: 500px;
+}

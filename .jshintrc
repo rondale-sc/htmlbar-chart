@@ -2,6 +2,8 @@
   "predef": [
     "document",
     "window",
+    "performance",
+    "Handlebars",
     "-Promise"
   ],
   "browser" : true,

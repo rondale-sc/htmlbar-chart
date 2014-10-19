@@ -17,4 +17,11 @@ var app = new EmberApp();
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
+app.import('vendor/htmlbars/htmlbars-compiler.amd.js', {
+  exports: {
+  'htmlbars-compiler/compiler': ['default']
+  }
+})
+//app.import('vendor/htmlbars/htmlbars-runtime.amd.js')
+
 module.exports = app.toTree();

@@ -1,0 +1,35 @@
+<div class="inline">
+  <p>Template</p>
+  {{textarea value=daTemplate}}
+</div>
+<div class="inline">
+  <p>Context</p>
+  {{textarea value=daContext classNameBindings='jsonParseError' }}
+</div>
+<hr/>
+<div class="inline">
+  <h2>Handlebars</h2>
+  <p>Render Time: {{handlebarsRenderTime}} ms</p>
+  <div class="output">
+    <pre>
+      {{compiledHandlebars}}
+    </pre>
+  </div>
+  {{ view "rendered" 
+    instrumentName="render-time.handlebars"
+    template=compiledHandlebars
+    context=jsonContext }}
+</div>
+<div class="inline">
+  <h2>HTMLbars</h2>
+  <p>Render Time: {{htmlbarsRenderTime}} ms</p>
+  <div class="output">
+    <pre>
+      {{compiledHTMLBars}}
+    </pre>
+  </div>
+  {{ view "rendered" 
+    instrumentName="render-time.htmlbars"
+    template=compiledHTMLBars
+    context=jsonContext }}
+</div>

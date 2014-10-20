@@ -1,6 +1,14 @@
 import Ember from 'ember';
 import { compileSpec as htmlbarsCompileSpec } from 'htmlbars-compiler/compiler';
 
+function renderTime(name) {
+  return Ember.computed('time.render.' + name + '.start', 'time.render.' + name + '.stop', function(){
+    var start = this.get('time.render.' + name + '.start');
+    var stop = this.get('time.render.' + name + '.stop');
+    return stop - start;
+  });
+}
+
 export default Ember.Controller.extend({
   daTemplate: null,
   daContext: null,
@@ -21,15 +29,18 @@ export default Ember.Controller.extend({
       }
     }
   },
+
   init: function() {
     this._super();
     this.setProperties({
       daTemplate: '<div>Name: {{name}}</div>',
       daContext: '{ "name" : "Tomster" }'
     });
+    this.subscribeToRender();
+  },
 
+  subscribeToRender: function(){
     var self = this;
-
     Ember.subscribe("render", {
       before: function(name, timestamp) {
         if (name.indexOf('render-time') !== -1) {
@@ -47,17 +58,9 @@ export default Ember.Controller.extend({
     });
   },
 
-  handlebarsRenderTime: Ember.computed('time.render.handlebars.start', 'time.render.handlebars.stop', function(){
-    var start = this.get('time.render.handlebars.start');
-    var stop = this.get('time.render.handlebars.stop');
-    return stop - start;
-  }),
+  handlebarsRenderTime: renderTime('handlebars'),
 
-  htmlbarsRenderTime: Ember.computed('time.render.htmlbars.start', 'time.render.htmlbars.stop', function(){
-    var start = this.get('time.render.htmlbars.start');
-    var stop = this.get('time.render.htmlbars.stop');
-    return stop - start;
-  }),
+  htmlbarsRenderTime: renderTime('htmlbars'),
 
   precompiledHandlebars: Ember.computed('daTemplate', function(){
     try {

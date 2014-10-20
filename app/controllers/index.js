@@ -6,7 +6,7 @@ function renderTime(name) {
   return Ember.computed('time.render.' + name + '.start', 'time.render.' + name + '.stop', function(){
     var start = this.get('time.render.' + name + '.start');
     var stop = this.get('time.render.' + name + '.stop');
-    return stop - start;
+    return (stop - start).toFixed(4);
   });
 }
 

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { compileSpec as htmlbarsCompileSpec } from 'htmlbars-compiler/compiler';
+import examples from '../examples';
 
 function renderTime(name) {
   return Ember.computed('time.render.' + name + '.start', 'time.render.' + name + '.stop', function(){
@@ -10,8 +11,8 @@ function renderTime(name) {
 }
 
 export default Ember.Controller.extend({
-  daTemplate: null,
-  daContext: null,
+  daTemplate: '',
+  daContext: '',
   handlebarsJsonContext: null,
   htmlbarsJsonContext: null,
 
@@ -32,11 +33,14 @@ export default Ember.Controller.extend({
 
   init: function() {
     this._super();
-    this.setProperties({
-      daTemplate: '<div>Name: {{name}}</div>',
-      daContext: '{ "name" : "Tomster" }'
-    });
+    this.set('examples', this.exampleOptions());
     this.subscribeToRender();
+  },
+
+  exampleOptions: function(){
+    return Ember.$.map(examples, function(e, i){
+      return { text: e.name, value: i };
+    });
   },
 
   subscribeToRender: function(){
@@ -57,6 +61,11 @@ export default Ember.Controller.extend({
       }
     });
   },
+
+  changeExample: Ember.observer('selectedExample', function(){
+    this.set('daTemplate', examples[this.get('selectedExample')].template);
+    this.set('daContext', JSON.stringify(examples[this.get('selectedExample')].context || {}));
+  }),
 
   handlebarsRenderTime: renderTime('handlebars'),
 
@@ -126,6 +135,12 @@ export default Ember.Controller.extend({
 
   highlight: function(source) {
     return hljs.highlight('javascript', source).value;
+  },
+
+  actions: {
+    clicked: function() {
+      alert('hello');
+    }
   }
 
 });

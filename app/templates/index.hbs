@@ -1,12 +1,22 @@
-<div class="inline">
-  <p>Template</p>
-  {{textarea value=daTemplate classNameBindings='templateParseError' }}
+<div>
+  <div class="inline">
+    <p>Examples</p>
+    {{view Ember.Select
+      class="select"
+      content=examples
+      optionLabelPath="content.text"
+      optionValuePath="content.value"
+      value=selectedExample}}
+  </div>
+  <div class="inline">
+    <p>Template</p>
+    {{textarea value=daTemplate class='template-input' classNameBindings='templateParseError' }}
+  </div>
+  <div class="inline">
+    <p>Context</p>
+    {{textarea value=daContext class='context-input' classNameBindings='jsonParseError' }}
+  </div>
 </div>
-<div class="inline">
-  <p>Context</p>
-  {{textarea value=daContext classNameBindings='jsonParseError' }}
-</div>
-<hr/>
 
 <div class="inline">
   <h2>Handlebars</h2>

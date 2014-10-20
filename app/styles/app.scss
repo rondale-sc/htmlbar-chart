@@ -6,15 +6,29 @@ html, body {
 
 .inline {
   display: inline-block;
+  vertical-align: top;
 }
 
-.json-parse-error {
+.json-parse-error, .template-parse-error {
   border: 1px solid $red;
   background: lighten($red, 45%);
   outline: none;
 }
 
-.output {
+.precompile {
+  width: 500px;
+}
+
+code {
+  font-size: 12px;
+  overflow: auto;
+  white-space: pre;
+  margin: 0;
+  padding: 0;
+}
+
+.rendered {
+  box-sizing: border-box;
   max-height: 300px;
   min-height: 100px;
   margin-top: 5px;

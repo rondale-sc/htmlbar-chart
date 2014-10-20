@@ -24,9 +24,12 @@ var app = new EmberApp({
 
 app.import('vendor/htmlbars/htmlbars-compiler.amd.js', {
   exports: {
-  'htmlbars-compiler/compiler': ['default']
+    'htmlbars-compiler/compiler': ['default']
   }
-})
-//app.import('vendor/htmlbars/htmlbars-runtime.amd.js')
+});
+
+app.import('vendor/highlight/highlight.min.js');
+app.import('vendor/escodegen/escodegen.browser.js');
+app.import('vendor/esprima/esprima.js');
 
 module.exports = app.toTree();

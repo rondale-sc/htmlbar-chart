@@ -4,7 +4,10 @@
     "window",
     "performance",
     "Handlebars",
-    "-Promise"
+    "-Promise",
+    "hljs",
+    "esprima",
+    "escodegen"
   ],
   "browser" : true,
   "boss" : true,

@@ -137,10 +137,4 @@ export default Ember.Controller.extend({
     return hljs.highlight('javascript', source).value;
   },
 
-  actions: {
-    clicked: function() {
-      alert('hello');
-    }
-  }
-
 });

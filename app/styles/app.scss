@@ -3,11 +3,18 @@ $header_orange: #e1563f;
 $code_bg: #fefbfb;
 $black: #252525;
 $border: #d1d1d1;
+$width: 960px;
 
 html, body {
   margin: 0 10px;
   background: #faf4f1;
   padding: 0;
+}
+
+body {
+  margin-left: auto;
+  margin-right: auto;
+  width: $width;
 }
 
 .inline {
@@ -24,7 +31,7 @@ html, body {
 }
 
 .precompile {
-  width: 500px;
+  width: $width / 2 - 10px;
   border: 1px solid $border;
 }
 
@@ -49,7 +56,7 @@ code {
   overflow: scroll;
   border: 1px solid black;
   padding: 5px;
-  width: 500px;
+  width: $width / 2 - 10px;
 }
 
 .template-input, .context-input {
@@ -58,4 +65,16 @@ code {
 
 .context-input {
   min-width: 200px;
+}
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: left;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+  span {
+    float: right;
+  }
 }

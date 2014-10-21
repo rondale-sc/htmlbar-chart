@@ -1,0 +1,6 @@
+{{#each metrics}}
+  <p>{{name}}</p>
+  {{#each results}}
+    <div {{bind-attr style='style'}}>{{name}} <span class='value'>{{value}}</span></div>
+  {{/each}}
+{{/each}}

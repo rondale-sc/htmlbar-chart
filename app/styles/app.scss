@@ -1,13 +1,20 @@
 $red: #cf4032;
+$header_orange: #e1563f;
+$code_bg: #fefbfb;
+$black: #252525;
+$border: #d1d1d1;
 
 html, body {
   margin: 0 10px;
+  background: #faf4f1;
   padding: 0;
 }
 
 .inline {
   display: inline-block;
   vertical-align: top;
+  h2 { color: $header_orange }
+  p { color: $black }
 }
 
 .json-parse-error, .template-parse-error {
@@ -18,6 +25,11 @@ html, body {
 
 .precompile {
   width: 500px;
+  border: 1px solid $border;
+}
+
+code.hljs {
+  background-color: $code_bg;
 }
 
 code {

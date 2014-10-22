@@ -51,7 +51,7 @@ code {
   max-height: 300px;
   min-height: 100px;
   margin-top: 5px;
-  overflow: scroll;
+  overflow: auto;
   border: 1px solid black;
   padding: 5px;
   width: 470px; }
@@ -72,4 +72,4 @@ code {
   .chart div span {
     float: right; }
 
-/*# sourceMappingURL=../../tree_merger-tmp_dest_dir-Xx4bCzpr.tmp/app/styles/htmlbar-chart.css.map */
+/*# sourceMappingURL=../../tree_merger-tmp_dest_dir-aG1t27q0.tmp/app/styles/htmlbar-chart.css.map */

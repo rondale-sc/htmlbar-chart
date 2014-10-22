@@ -117,8 +117,10 @@ export default Ember.Controller.extend({
   }),
 
   changeExample: Ember.observer('selectedExample', function(){
+
     this.set('daTemplate', examples[this.get('selectedExample')].template);
     this.set('daContext', JSON.stringify(examples[this.get('selectedExample')].context || {}));
+    this.send('clearSamples');
   }),
 
   handlebarsRenderTime: renderTime('handlebars'),
@@ -190,5 +192,12 @@ export default Ember.Controller.extend({
   highlight: function(source) {
     return hljs.highlight('javascript', source).value;
   },
+
+  actions: {
+    clearSamples: function() {
+      this.set('renderCounter', 0);
+      this.set('renderTimes', []);
+    }
+  }
 
 });

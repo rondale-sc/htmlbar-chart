@@ -1,7 +1,3 @@
-<header>
-  <h1>HTMLBar Chart!</h1>
-  <p><b>Please note</b>: this is based on a <a href='https://github.com/mixonic/ember.js/commit/1dd111c27898c0168af42b1c2e5af1e117f08d70'>WIP</a> branch of HTMLBars that supports only basic data binding</p>
-</header>
 <div>
   <div class="inline">
     <p>Examples</p>
@@ -20,12 +16,16 @@
     <p>Context</p>
     {{textarea value=daContext class='context-input' classNameBindings='jsonParseError' }}
   </div>
+  <div>
+    <button {{ action "clearSamples" }}>Reset samples</button>
+  </div>
 </div>
 
 {{bar-chart values=chartValues}}
 
 <div class="inline">
   <h2>Handlebars</h2>
+  <p>Render Time: {{handlebarsRenderTime}} ms</p>
   <div class="precompile">
     <code class="hljs javascript">
       {{{highlightedHandlebars}}}
@@ -39,6 +39,7 @@
 </div>
 <div class="inline">
   <h2>HTMLbars</h2>
+  <p>Render Time: {{htmlbarsRenderTime}} ms</p>
   <div class="precompile">
     <code class="hljs javascript">
       {{{highlightedHTMLBars}}}

@@ -13,6 +13,11 @@ header h1 {
 header p {
   color: #252525; }
 
+footer p {
+  color: #252525;
+  text-align: center;
+  font-size: 12px; }
+
 .inline {
   display: inline-block;
   vertical-align: top; }
@@ -67,4 +72,4 @@ code {
   .chart div span {
     float: right; }
 
-/*# sourceMappingURL=../../tree_merger-tmp_dest_dir-fVjGyYu1.tmp/app/styles/htmlbar-chart.css.map */
+/*# sourceMappingURL=../../tree_merger-tmp_dest_dir-Xx4bCzpr.tmp/app/styles/htmlbar-chart.css.map */

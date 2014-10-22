@@ -22,6 +22,14 @@ header {
   p { color: $black }
 }
 
+footer {
+  p {
+    color: $black;
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
 .inline {
   display: inline-block;
   vertical-align: top;

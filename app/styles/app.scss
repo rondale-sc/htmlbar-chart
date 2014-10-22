@@ -17,6 +17,11 @@ body {
   width: $width;
 }
 
+header {
+  h1 { color: $header_orange; }
+  p { color: $black }
+}
+
 .inline {
   display: inline-block;
   vertical-align: top;

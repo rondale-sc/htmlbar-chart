@@ -8,6 +8,11 @@ body {
   margin-right: auto;
   width: 960px; }
 
+header h1 {
+  color: #e1563f; }
+header p {
+  color: #252525; }
+
 .inline {
   display: inline-block;
   vertical-align: top; }
@@ -62,4 +67,4 @@ code {
   .chart div span {
     float: right; }
 
-/*# sourceMappingURL=../../tree_merger-tmp_dest_dir-FIVLIFBr.tmp/app/styles/htmlbar-chart.css.map */
+/*# sourceMappingURL=../../tree_merger-tmp_dest_dir-iaqPUOqB.tmp/app/styles/htmlbar-chart.css.map */

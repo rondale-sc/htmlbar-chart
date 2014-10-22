@@ -95,6 +95,9 @@ code {
 .twitter-share-button {
   margin-top: 25px;
   margin-left: 20px;
+}
+
+a.twitter-share-button {
   &.hidden {
     display: none;
   }

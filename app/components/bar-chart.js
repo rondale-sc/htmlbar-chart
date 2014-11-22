@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['chart'],
-  timescales: [1, 5, 10, 50, 100, 500, 1000, 10000],
+  timescales: [1, 2, 3, 4, 5, 10, 20, 50, 75, 100, 500, 1000, 10000],
   colors: [ '#5e9fb2', '#67ca85' ],
   timescaleForResults: function(results){
     var values = Ember.$.map(results, function(r){
@@ -10,12 +10,14 @@ export default Ember.Component.extend({
     });
     var max = Math.max.apply(null, values);
     var timescale = this.timescales[0];
-    Ember.$.each(this.timescales, function(t){
+    var i, t;
+    for(i = 0; i < this.timescales.length; i++) {
+      t = this.timescales[i];
       if(t > max){
         timescale = t;
-        return false;
+        break;
       }
-    });
+    }
     return timescale;
   },
 

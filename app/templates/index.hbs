@@ -30,12 +30,15 @@
       {{{highlightedHandlebars}}}
     </code>
   </div>
-  {{ view 
+  {{#if readyToDisplay}}
+  {{ view
     class="rendered"
     instrumentName="render-time.handlebars"
     template=handlebarsTemplate
-    context=jsonContext }}
+    context=handlebarsContext }}
+  {{/if}}
 </div>
+
 <div class="inline">
   <h2>HTMLbars</h2>
   <div class="precompile">
@@ -43,9 +46,11 @@
       {{{highlightedHTMLBars}}}
     </code>
   </div>
-  {{ view 
+  {{#if readyToDisplay}}
+  {{ view
     class="rendered"
     instrumentName="render-time.htmlbars"
     template=htmlbarsTemplate
-    context=jsonContext }}
+    context=htmlbarsContext }}
+  {{/if}}
 </div>

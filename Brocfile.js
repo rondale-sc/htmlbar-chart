@@ -4,7 +4,6 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
   vendorFiles: {
-    'handlebars': 'bower_components/handlebars/handlebars.js',
     'ember.js': 'vendor/ember/ember.js'
   }
 });
@@ -21,12 +20,6 @@ var app = new EmberApp({
 // modules that you would like to import into your application
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
-
-app.import('vendor/htmlbars/htmlbars-compiler.amd.js', {
-  exports: {
-    'htmlbars-compiler/compiler': ['default']
-  }
-});
 
 app.import('vendor/highlight/highlight.min.js');
 app.import('vendor/escodegen/escodegen.browser.js');

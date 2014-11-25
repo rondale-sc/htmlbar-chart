@@ -1,11 +1,13 @@
 import Ember from 'ember';
-import { compileSpec as htmlbarsCompileSpec } from 'htmlbars-compiler/compiler';
 import examples from '../examples';
 
 function renderTime(name) {
-  return Ember.computed('time.render.' + name + '.start', 'time.render.' + name + '.stop', function(){
+  return Ember.computed('time.render.' + name + '.stop', function(){
     var start = this.get('time.render.' + name + '.start');
     var stop = this.get('time.render.' + name + '.stop');
+    if(!start || !stop){
+      return 0;
+    }
     return (stop - start).toFixed(4);
   });
 }
@@ -40,8 +42,13 @@ export default Ember.Controller.extend({
   timer: Ember.observer(function(){
     var self = this;
     var timer = setInterval(function(){
-      self.set('jsonContext', Ember.$.extend({},self.get('jsonContext')));
-    }, 200);
+      var handlebarsTurn = (Math.random(1.0) < 0.5);
+      if(handlebarsTurn){
+        self.set('handlebarsContext', Ember.$.extend({},self.get('jsonContext')));
+      }else{
+        self.set('htmlbarsContext', Ember.$.extend({},self.get('jsonContext')));
+      }
+    }, 100);
     this.set('timerInterval', timer);
   }).on('init'),
 
@@ -82,37 +89,42 @@ export default Ember.Controller.extend({
         avg = 0;
       }
       var totes = avg * (count - 1);
+      // console.log('totes: ' +  totes, 't: ' + t, 'count: ' + count);
       self.renderTimes[i] = (totes + t)/count;
     });
   },
 
   chartValues: Ember.computed('htmlbarsRenderTime', 'handlebarsRenderTime', function(){
-    this.pushRenderTimes([ parseFloat(this.get('handlebarsRenderTime')), parseFloat(this.get('htmlbarsRenderTime'))]);
-    var label = 'Render Avg ('+this.renderCounter+' samples)';
+    var handlebarsRenderTime = parseFloat(this.get('handlebarsRenderTime'));
+    var htmlbarsRenderTime = parseFloat(this.get('htmlbarsRenderTime'));
+
     var values = {};
+    if (handlebarsRenderTime !== 0 && htmlbarsRenderTime !== 0) {
+      this.pushRenderTimes([handlebarsRenderTime, htmlbarsRenderTime]);
+      var label = 'Render Avg ('+this.renderCounter+' samples)';
 
-    values[label] = [
-      {
-        name: 'Handlebars',
-        value: this.renderTimes[0].toFixed(4),
-      },
-      {
-        name: 'HTMLBars',
-        value: this.renderTimes[1].toFixed(4),
-      }
-    ];
+      values[label] = [
+        {
+          name: 'Handlebars',
+          value: this.renderTimes[0].toFixed(4),
+        },
+        {
+          name: 'HTMLBars',
+          value: this.renderTimes[1].toFixed(4),
+        }
+      ];
 
-    values['Render'] = [
-      {
-        name: 'Handlebars',
-        value: parseFloat(this.get('handlebarsRenderTime')),
-      },
-      {
-        name: 'HTMLBars',
-        value: parseFloat(this.get('htmlbarsRenderTime'))
-      }
-    ];
-
+      values['Render'] = [
+        {
+          name: 'Handlebars',
+          value: parseFloat(this.get('handlebarsRenderTime')),
+        },
+        {
+          name: 'HTMLBars',
+          value: parseFloat(this.get('htmlbarsRenderTime'))
+        }
+      ];
+    }
     return values;
   }),
 
@@ -139,13 +151,15 @@ export default Ember.Controller.extend({
   precompiledHTMLBars: Ember.computed('daTemplate', function(){
     try {
       this.set('templateParseError', false);
-      return htmlbarsCompileSpec(this.get('daTemplate'));
+      return Ember.__loader.require('htmlbars-compiler/compiler')['compileSpec'](this.get('daTemplate'));
     }
     catch (e) {
       this.set('templateParseError', true);
       return "/* "+e.message+" */";
     }
   }),
+
+  handlebarsContext: {},
 
   handlebarsTemplate: Ember.computed('precompiledHandlebars', function(){
     try {
@@ -155,6 +169,8 @@ export default Ember.Controller.extend({
       this.set('templateParseError', true);
     }
   }),
+
+  htmlbarsContext: {},
 
   htmlbarsTemplate: Ember.computed('precompiledHTMLBars', function(){
     return new Function('return ' + this.get('precompiledHTMLBars'))();
@@ -172,7 +188,6 @@ export default Ember.Controller.extend({
   }).on('init'),
 
   highlightedHTMLBars: Ember.computed('precompiledHTMLBars', function() {
-    // prettify will remove error comment
     if(this.get('templateParseError')){
       return this.highlight(this.get('precompiledHTMLBars'));
     }else{
@@ -181,7 +196,7 @@ export default Ember.Controller.extend({
   }),
 
   highlightedHandlebars: Ember.computed('precompiledHandlebars', function() {
-    return this.highlight(this.prettify(this.get('precompiledHandlebars')));
+    return this.highlight(this.prettify(this.get('precompiledHandlebars').main));
   }),
 
   prettify: function(precompiled) {
@@ -193,6 +208,9 @@ export default Ember.Controller.extend({
     return hljs.highlight('javascript', source).value;
   },
 
+  readyToDisplay: Ember.computed('daTemplate', 'daContext', function(){
+    return !!this.get('daContext') && !!this.get('daTemplate');
+  }),
   actions: {
     clearSamples: function() {
       this.set('renderCounter', 0);

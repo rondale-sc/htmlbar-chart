@@ -39,17 +39,28 @@ export default Ember.Controller.extend({
     this.subscribeToRender();
   },
 
-  timer: Ember.observer(function(){
+  startTimer: function(){
     var self = this;
     var timer = setInterval(function(){
-      var handlebarsTurn = (Math.random(1.0) < 0.5);
+      var handlebarsTurn = (Math.random(1.0) > 0.5);
       if(handlebarsTurn){
         self.set('handlebarsContext', Ember.$.extend({},self.get('jsonContext')));
       }else{
         self.set('htmlbarsContext', Ember.$.extend({},self.get('jsonContext')));
       }
-    }, 100);
+    }, 300);
     this.set('timerInterval', timer);
+    this.set('running', true);
+  },
+
+  stopTimer: function(){
+    clearInterval(this.get('timerInterval'));
+    this.set('running', false);
+    console.log('stop');
+  },
+
+  timer: Ember.observer(function(){
+    this.startTimer();
   }).on('init'),
 
   exampleOptions: function(){
@@ -211,10 +222,22 @@ export default Ember.Controller.extend({
   readyToDisplay: Ember.computed('daTemplate', 'daContext', function(){
     return !!this.get('daContext') && !!this.get('daTemplate');
   }),
+
+  toggleTitle: Ember.computed('running', function(){
+    return this.get('running') ? 'Stop' : 'Start';
+  }),
+
   actions: {
     clearSamples: function() {
       this.set('renderCounter', 0);
       this.set('renderTimes', []);
+    },
+    toggleRun: function() {
+      if(this.get('running')){
+        this.stopTimer();
+      }else{
+        this.startTimer();
+      }
     }
   }
 

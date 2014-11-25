@@ -1,4 +1,75 @@
+`import Ember from 'ember'`
 Examples = [
+  {
+    name: "each loop"
+    template:
+      """
+      <h1>{{title}}</h1>
+      <ul>
+        {{#each name in names}}
+          <li>{{name}}</li>
+        {{/each}}
+      </ul>
+      """
+    context:
+      title: "Thanks"
+      names: [
+        "Yehuda Katz"
+        "Tom Dale"
+        "Peter Wagenet"
+        "Trek Glowacki"
+        "Erik Bryn"
+        "Kris Selden"
+        "Stefan Penner"
+        "Leah Silber"
+        "Alex Matchneer"
+        "Robert Jackson"
+        "Mathew Beale"
+        "Martin Muñoz"
+      ]
+  }
+  {
+    name: "if condition"
+    template:
+      """
+      <h1>{{title}}</h1>
+      {{#if cond}}
+        <p>It Works!!</p>
+      {{/if}}
+      """
+    context:
+      title: "If?"
+      cond: true
+  }
+  {
+    name: "if/else condition"
+    template:
+      """
+      <h1>{{title}}</h1>
+      {{#if cond}}
+        <p>{{yes}}</p>
+      {{else}}
+        <p>{{no}}</p>
+      {{/if}}
+      """
+    context:
+      title: "If"
+      cond: true
+      yes: "Yep"
+      no: "Nope"
+  }
+  {
+    name: "bind-attr"
+    template:
+      """
+      <h1>{{title}}</h1>
+      <p {{bind-attr style=style}}>{{content}}</p>
+      """
+    context:
+      title: "Bind Attribute"
+      style: "background-color: #67ca85"
+      content: "Such stylish!"
+  }
   {
     name: "nested html"
     template:
